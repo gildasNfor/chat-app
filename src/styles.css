@@ -1,0 +1,28 @@
+body {
+    text-align: center;
+    background-color: #008c8c;
+    background-image: url("https://www.transparenttextures.com/patterns/black-thread-light.png");
+    margin: auto;
+    padding-top: 150px;
+    font-family: 'PT Sans Caption', sans-serif;
+}
+
+.f-icons {
+
+    margin: 5px;
+}
+
+.login {
+    background-color: ivory;
+    width: 500px;
+    height: 250px;
+    padding: 20px;
+    margin: auto;
+    border-radius: 2%;
+    text-align: left;
+}
+
+span {
+
+  margin-left: 5px;
+}
