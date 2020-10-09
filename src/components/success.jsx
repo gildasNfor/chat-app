@@ -1,9 +1,28 @@
 // jshint esversion:6
 
-import React from "react";
+import React, { useState } from "react";
+import { axios } from "axios";
 import Contact from "./Contact";
 
 const Success = () => {
+  const names = [
+    "Ballack",
+    "Bojan",
+    "Excess",
+    "Lord Bright",
+    "Horse Man",
+    "Ballack",
+    "Bojan",
+    "Excess",
+    "Lord Bright",
+    "Horse Man",
+  ];
+  let [activeChat, setActiveChat] = useState("");
+
+  const openChat = (chatter) => {
+    setActiveChat(chatter);
+  };
+
   return (
     <>
       <div className="contacts">
@@ -12,23 +31,20 @@ const Success = () => {
           className="search-contact-list"
           type="text"
           placeholder="Search or start new chat"
+          // eslint-disable-next-line react/jsx-no-comment-textnodes
         />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
-        <Contact name="Ballack" text="Welcome to my chat app" />
+
+        {names.map((name) => (
+          <Contact
+            openChat={openChat}
+            name={name}
+            // source={getPhotos()[Math.floor(Math.random() * 30)].download_url}
+          />
+        ))}
       </div>
       <div className="chat-zone">
         <div className="heading">
-          <Contact name="Ballack" />
+          <Contact name={activeChat} />
         </div>
         <div className="write-message">
           <input

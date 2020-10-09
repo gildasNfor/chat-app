@@ -82,6 +82,10 @@ body {
   text-align: left;
 }
 
+.heading {
+  position: fixed;
+  width: 100%;
+}
 .send-message {
   border-radius: 25px;
   width: 65%;
