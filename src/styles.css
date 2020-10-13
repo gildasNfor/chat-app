@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  background-color: #f9f7d9;
+  background-color: #8d93ab;
   background-image: url("https://www.transparenttextures.com/patterns/black-thread-light.png");
   margin: auto;
   padding-top: 150px;
@@ -26,7 +26,8 @@ body {
   top: 0;
   left: 0;
   width: 30%;
-  /* height: 100%; */
+
+  height: 100%;
   background-color: #eeeeee;
   padding: 10px 0;
 }

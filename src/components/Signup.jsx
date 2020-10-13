@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import firebase from "../util/firebase";
 import "../styles.css";
 import * as md5 from "md5";
@@ -8,6 +9,8 @@ const Signup = () => {
     username: "",
     password: "",
   });
+
+  const history = useHistory();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,9 +27,26 @@ const Signup = () => {
       password: md5(profile.password),
     };
 
-    userList.push(newProfile);
-    setprofile({ username: "", password: "" });
-    event.preventDefault();
+    userList.on("value", (snapshot) => {
+      const users = snapshot.val();
+      const currentUsers = [];
+
+      for (let id in users) {
+        currentUsers.push(users[id]);
+      }
+
+      if (currentUsers.indexOf(newProfile.username) === -1) {
+        userList.push(newProfile);
+        setprofile({ username: "", password: "" });
+        history.push("/success");
+      } else {
+        history.push("/failure");
+      }
+    });
+
+    // userList.push(newProfile);
+    // setprofile({ username: "", password: "" });
+    // event.preventDefault();
   };
 
   return (
@@ -45,6 +65,7 @@ const Signup = () => {
                 autoComplete="off"
                 value={profile.username}
                 autoFocus
+                required
               />
             </div>
             <div className="form-group">
@@ -55,6 +76,7 @@ const Signup = () => {
                 type="password"
                 className="form-control"
                 value={profile.password}
+                required
               />
             </div>
 

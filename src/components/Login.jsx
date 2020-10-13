@@ -71,6 +71,7 @@ const Login = () => {
                 value={profile.username}
                 class="form-control"
                 autoFocus
+                required
               />
             </div>
             <div class="form-group">
@@ -81,6 +82,7 @@ const Login = () => {
                 type="password"
                 value={profile.password}
                 class="form-control"
+                required
               />
             </div>
             <button type="submit" class="btn btn-success">
