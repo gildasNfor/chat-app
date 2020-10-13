@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import firebase from "../util/firebase";
 import "../styles.css";
 import * as md5 from "md5";
@@ -32,21 +32,25 @@ const Signup = () => {
       const currentUsers = [];
 
       for (let id in users) {
-        currentUsers.push(users[id]);
+        currentUsers.push(users[id].username);
       }
 
       if (currentUsers.indexOf(newProfile.username) === -1) {
         userList.push(newProfile);
+        console.log(`added`);
         setprofile({ username: "", password: "" });
+        // eslint-disable-next-line no-unused-expressions
+        // <Redirect to="/success" />;
         history.push("/success");
       } else {
+        // eslint-disable-next-line no-unused-expressions
+        // <Redirect to="/failure" />;
         history.push("/failure");
       }
     });
 
-    // userList.push(newProfile);
-    // setprofile({ username: "", password: "" });
-    // event.preventDefault();
+    setprofile({ username: "", password: "" });
+    event.preventDefault();
   };
 
   return (

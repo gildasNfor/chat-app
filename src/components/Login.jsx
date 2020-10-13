@@ -1,7 +1,7 @@
 // jshint esversion:6
 
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import * as md5 from "md5";
 import firebase from "../util/firebase";
 import "../styles.css";
@@ -28,24 +28,22 @@ const Login = () => {
   const tryLogin = (event) => {
     const profiles = firebase.database().ref("users");
     const checkProfile = {
-      username: profile.username,
       password: md5(profile.password),
+      username: profile.username,
     };
-
-    const { username, password } = checkProfile;
 
     profiles.on("value", (snapshot) => {
       const users = snapshot.val();
+      const list = [];
 
       for (let id in users) {
-        if (
-          users[id].username === username &&
-          users[id].password === password
-        ) {
-          history.push("/success");
-        } else {
-          history.push("/failure");
-        }
+        list.push(JSON.stringify(users[id]));
+      }
+
+      if (list.indexOf(JSON.stringify(checkProfile)) === -1) {
+        history.push("/failure");
+      } else {
+        history.push("/success");
       }
     });
     setprofile({
