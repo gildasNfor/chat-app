@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import firebase from "../util/firebase";
 import "../styles.css";
 import * as md5 from "md5";

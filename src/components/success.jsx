@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../util/firebase";
 import Contact from "./Contact";
+import Text from "./Text";
 
 const Success = () => {
   const [users, setUsers] = useState([]);
@@ -98,6 +99,9 @@ const Success = () => {
       <div className="chat-zone">
         <div className="heading">
           <Contact name={activeChat} source={displayPhoto} />
+        </div>
+        <div className="texting-area">
+          <Text text="Welcome to my chat app. Nothing to see here. Just some placeholder text." />
         </div>
         <div className="write-message">
           <input

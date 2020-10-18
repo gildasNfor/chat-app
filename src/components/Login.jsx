@@ -1,7 +1,7 @@
 // jshint esversion:6
 
 import React, { useState } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as md5 from "md5";
 import firebase from "../util/firebase";
 import "../styles.css";
