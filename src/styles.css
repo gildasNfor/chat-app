@@ -1,10 +1,17 @@
+html,
 body {
-  text-align: center;
+  height: 100%;
+}
+
+
+body {
   background-color: #d6d2c4;
   background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
   margin: auto;
-  padding-top: 150px;
   font-family: "PT Sans Caption", sans-serif;
+  width:100%;
+   display: flex;
+  flex-direction: column;
 }
 
 .f-icons {
@@ -66,7 +73,6 @@ body {
   border-radius: 100%;
   width: 50px;
   height: 50px;
-  margin: 0 10px;
   display: inline;
 }
 
@@ -160,4 +166,52 @@ body {
 
 span {
   margin-left: 5px;
+}
+
+.my-container {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  margin-right: 10px !important;
+    margin-left: 10px !important;
+    background-color: red;
+    height: 100vh;
+}
+
+.my-profile {
+  margin-left: 5px !important;
+  display: inline;
+}
+
+.btn-sml { height: 4vh; }
+.new-message {
+  display: flex;
+align-items: center;
+}
+
+.thread-item {
+  height: 70px;
+}
+.thread-list {
+  background-color: greenyellow;
+  border: 1px solid black;
+  width: 100%;
+  overflow-y: scroll;
+  height: calc(100vh - 95px)
+}
+
+.top-row {
+  height: 55px;
+}
+.search-row{
+  height: 40px;
+}
+
+.text-area {
+  height: 60px;
+  padding: 10px;
+  background-color: red;
+}
+.chat-area {
+  height: calc(100vh - 115px);
+  background-color: green;
 }
