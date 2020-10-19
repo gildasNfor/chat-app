@@ -3,14 +3,13 @@ body {
   height: 100%;
 }
 
-
 body {
   background-color: #d6d2c4;
   background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
   margin: auto;
   font-family: "PT Sans Caption", sans-serif;
-  width:100%;
-   display: flex;
+  width: 100%;
+  display: flex;
   flex-direction: column;
 }
 
@@ -74,6 +73,7 @@ body {
   width: 50px;
   height: 50px;
   display: inline;
+  margin: 5px;
 }
 
 .boundary {
@@ -172,9 +172,9 @@ span {
   padding-left: 10px !important;
   padding-right: 10px !important;
   margin-right: 10px !important;
-    margin-left: 10px !important;
-    background-color: red;
-    height: 100vh;
+  margin-left: 10px !important;
+  background-color: red;
+  height: 100vh;
 }
 
 .my-profile {
@@ -182,10 +182,12 @@ span {
   display: inline;
 }
 
-.btn-sml { height: 4vh; }
+.btn-sml {
+  height: 4vh;
+}
 .new-message {
   display: flex;
-align-items: center;
+  align-items: center;
 }
 
 .thread-item {
@@ -196,13 +198,13 @@ align-items: center;
   border: 1px solid black;
   width: 100%;
   overflow-y: scroll;
-  height: calc(100vh - 95px)
+  height: calc(100vh - 95px);
 }
 
 .top-row {
   height: 55px;
 }
-.search-row{
+.search-row {
   height: 40px;
 }
 
@@ -214,4 +216,34 @@ align-items: center;
 .chat-area {
   height: calc(100vh - 115px);
   background-color: green;
+}
+
+.row-no-margin {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bubble-container {
+  width: 100%;
+  display: "flex";
+}
+.bubble {
+  border: 0.5px solid black;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.left {
+  justify-content: flex-start !important;
+}
+.right {
+  justify-content: flex-end !important;
+}
+
+.chat-bubble-container {
+  bottom: 0px;
+
+  margin-bottom: 68px;
 }

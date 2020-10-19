@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import firebase from "../util/firebase";
-import Contact from "../components/contact";
+import Contact from "../components/Contact";
+import Thread from "../components/thread";
+import ChatLayout from "../components/message";
 
 const Chat = () => {
   const [users, setUsers] = useState([]);
@@ -15,7 +17,8 @@ const Chat = () => {
     "https://www.htmlcsscolor.com/preview/gallery/E0ECE4.png"
   );
 
-  const myProfilePicURL = "https://lh3.googleusercontent.com/proxy/PrrANPV2Gh3flWgj2vWVWbywtDYiFn2AfW6ZJz1o24wZ2Fs6gz9KgAd9Gw8dLUW9PZLoSWovKIApmYoOk2uXv_K-TBcSrpPEXEKA_vX27LGci4EODFI3G2AM_cXYDfZduBovTTmb8EBSgnJjHHg8wh-Xlb8s"
+  const myProfilePicURL =
+    "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
 
   useEffect(() => {
     const profiles = firebase.database().ref("users");
@@ -77,7 +80,9 @@ const Chat = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-4">
-          <div className="row top-row"> {/** your name and add button */}
+          <div className="row top-row">
+            {" "}
+            {/** your name and add button */}
             <div className="col-md-10">
               <Contact name="Bill" source={myProfilePicURL} />
             </div>
@@ -85,45 +90,44 @@ const Chat = () => {
               <button className="btn btn-primary btn-sm">New </button>
             </div>
           </div>
-          <div className="row search-row"> {/** search */}
+          <div className="row search-row">
+            {" "}
+            {/** search */}
             <input type="text" placeholder="search" className="form-control" />
           </div>
-          <div className="row"> {/** threads */}
+          <div className="row">
+            {" "}
+            {/** threads */}
             <div className="thread-list full-height">
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
-              <div className="thread-item">test</div>
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
             </div>
           </div>
         </div>
         <div className="col-md-8">
-          <div className="row top-row"> {/** your name and add button */}
+          <div className="row top-row">
+            {" "}
+            {/** your name and add button */}
             <Contact name="Bill" source={myProfilePicURL} />
           </div>
           <div className="chat-area">
-            sasdfaf
-            </div>
+            <ChatLayout />
+          </div>
           <div className="text-area">
             <div className="row">
               <div className="col-md-10">
