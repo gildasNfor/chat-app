@@ -77,7 +77,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="container">
+    <div style={{ margin: "auto" }} className="container">
       <div className="row">
         <div className="col-md-4">
           <div className="row top-row">

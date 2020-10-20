@@ -6,7 +6,7 @@ import "../styles.css";
 
 export default function Home() {
   return (
-    <div>
+    <div className="home">
       <h1> Chat App </h1>
       <p>
         <i class="fab fa-whatsapp fa-5x"> </i>
