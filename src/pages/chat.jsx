@@ -93,7 +93,11 @@ const Chat = () => {
           <div className="row search-row">
             {" "}
             {/** search */}
-            <input type="text" placeholder="search" className="form-control" />
+            <input
+              type="text"
+              placeholder="search"
+              className="form-control search-contact-list"
+            />
           </div>
           <div className="row">
             {" "}
@@ -119,8 +123,8 @@ const Chat = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-8">
-          <div className="row top-row">
+        <div className="col-md-8 second-col">
+          <div className="row top-row present-chat">
             {" "}
             {/** your name and add button */}
             <Contact name="Bill" source={myProfilePicURL} />
@@ -133,7 +137,7 @@ const Chat = () => {
               <div className="col-md-10">
                 <input className="form-control" />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-2 send-button">
                 <button className="btn btn-success btn-sm">Send</button>
               </div>
             </div>

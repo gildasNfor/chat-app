@@ -21,8 +21,8 @@ const ChatLayout = () => {
   ];
 
   const chatBubbles = dummyData.map((obj, i = 0) => (
-    <div className={`bubble-container ${obj.direction} `} key={i}>
-      <div key={i++} className={`bubble `}>
+    <div className={`bubble-container ${obj.direction}`} key={i}>
+      <div key={i++} className={`bubble`}>
         <div>{obj.message}</div>
       </div>
     </div>
