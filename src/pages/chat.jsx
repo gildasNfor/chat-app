@@ -2,9 +2,36 @@
 
 import React, { useState, useEffect } from "react";
 import firebase from "../util/firebase";
-import Contact from "../components/Contact";
+import Contact from "../components/contact";
 import Thread from "../components/thread";
 import ChatLayout from "../components/message";
+import Modal from 'react-modal';
+import AddIcon from '@material-ui/icons/Add';
+import MessageIcon from '@material-ui/icons/Message';
+import CloseIcon from '@material-ui/icons/Close';
+
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    width: '30%',
+    height: '40%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: '#d4d8d1'
+  }
+};
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
+
+Modal.setAppElement('#root')
 
 const Chat = () => {
   const [users, setUsers] = useState([]);
@@ -16,9 +43,9 @@ const Chat = () => {
   const [displayPhoto, setDisplayPhoto] = useState(
     "https://www.htmlcsscolor.com/preview/gallery/E0ECE4.png"
   );
+  const [isSearchListOpen, setSearchListOpen] = useState(false)
 
-  const myProfilePicURL =
-    "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
+  const myProfilePicURL = "https://lh3.googleusercontent.com/proxy/5CygrHciKVJCh4IHjlVtZlkjf-B-yZfO9qnZc02njzTE2NPxkHNJnhinyeJN7yqmwRZQuJKwGNnlcj-Z8IXnsDQkgfzIXa6ZyiPdOy9NKpILACYkWeVvR3tm";
 
   useEffect(() => {
     const profiles = firebase.database().ref("users");
@@ -57,6 +84,13 @@ const Chat = () => {
     setMessage("");
   };
 
+  const handleNewButtonClicked = () => {
+    setSearchListOpen(true)
+  }
+  const handleSearchListClosed = () => {
+    setSearchListOpen(false);
+  }
+
   const handleSearch = (event) => {
     const query = event.target.value;
     setSearch(query);
@@ -76,27 +110,18 @@ const Chat = () => {
     });
   };
 
+
+
   return (
-    <div style={{ margin: "auto" }} className="container">
+    <div style={{ margin: "auto", border: "1px solid grey", backgroundColor: 'white' }} className="container">
       <div className="row">
-        <div className="col-md-4">
-          <div className="row top-row">
-            {" "}
-            {/** your name and add button */}
-            <div className="col-md-10">
-              <Contact name="Bill" source={myProfilePicURL} />
-            </div>
-            <div className="col-md-2 new-message">
-              <button className="btn btn-primary btn-sm">New </button>
-            </div>
+        <div className="col-md-4" style={{ borderRight: "1px solid black" }}>
+          <div className="row top-row d-flex justify-content-between align-items-center" style={{ backgroundColor: '#e0ece4' }}>
+            <Contact name="Bill" source={myProfilePicURL} />
+            <button className="btn btn-primary btn-sm mr-3" onClick={handleNewButtonClicked}>New <AddIcon /></button>
           </div>
           <div className="row search-row">
-            {" "}
-            {/** search */}
-            <input
-              type="text"
-              placeholder="search"
-              className="form-control search-contact-list"
+            <input type="text" placeholder="search" className="form-control p-2"
             />
           </div>
           <div className="row">
@@ -124,9 +149,7 @@ const Chat = () => {
           </div>
         </div>
         <div className="col-md-8 second-col">
-          <div className="row top-row present-chat">
-            {" "}
-            {/** your name and add button */}
+          <div className="row top-row d-flex pl-3">
             <Contact name="Bill" source={myProfilePicURL} />
           </div>
           <div className="chat-area">
@@ -144,6 +167,59 @@ const Chat = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isSearchListOpen}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <input className="form-control" placeholder="search" />
+            <button className="btn btn-danger btn-sm ml-3" onClick={handleSearchListClosed}><CloseIcon /></button>
+          </div>
+          <div className="search-list">
+            <ul className="list-group">
+              <li className="list-group-item">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Contact name="Bill" source={myProfilePicURL} />
+                  <span><MessageIcon /></span>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Contact name="Bill" source={myProfilePicURL} />
+                  <span><MessageIcon /></span>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Contact name="Bill" source={myProfilePicURL} />
+                  <span><MessageIcon /></span>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Contact name="Bill" source={myProfilePicURL} />
+                  <span><MessageIcon /></span>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Contact name="Bill" source={myProfilePicURL} />
+                  <span><MessageIcon /></span>
+                </div>
+              </li>
+              <li className="list-group-item">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Contact name="Bill" source={myProfilePicURL} />
+                  <span><MessageIcon /></span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

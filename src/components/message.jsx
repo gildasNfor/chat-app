@@ -1,11 +1,17 @@
 import React from "react";
+import Moment from 'react-moment';
+
+const calendarStrings = {
+  lastDay: '[Yesterday]',
+  sameDay: 'LT',
+  nextDay: '[Tomorrow at] LT',
+  lastWeek: '[last] dddd',
+  nextWeek: 'dddd',
+  sameElse: 'L'
+};
 
 const ChatLayout = () => {
   const date = new Date();
-  const timeSent = date.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
   const dummyData = [
     {
@@ -28,9 +34,9 @@ const ChatLayout = () => {
 
   const chatBubbles = dummyData.map((obj, i = 0) => (
     <div className={`bubble-container `} key={i}>
-      <div key={i++} className={`bubble ${obj.direction}`}>
+      <div key={i++} className={`p-1 bubble ${obj.direction}`}>
         <div>{obj.message}</div>
-        <span class="timestamp">{timeSent}</span>
+        <small className="timestamp"><Moment calendar={calendarStrings}>{date}</Moment></small>
       </div>
     </div>
   ));
