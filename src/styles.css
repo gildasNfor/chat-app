@@ -225,15 +225,10 @@ span {
 }
 
 .left {
-  /* margin: 0; */
-  position: relative;
-  float: left;
   justify-content: flex-start !important;
 }
 .right {
-  /* margin: 0 0 0 63%; */
-  position: relative;
-  float: right;
+  margin: 0 0 0 63%;
   justify-content: flex-end !important;
 }
 

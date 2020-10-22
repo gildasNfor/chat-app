@@ -33,7 +33,7 @@ const ChatLayout = () => {
   ];
 
   const chatBubbles = dummyData.map((obj, i = 0) => (
-    <div className={`bubble-container `} key={i}>
+    <div className="d-flex" key={i}>
       <div key={i++} className={`p-1 bubble ${obj.direction}`}>
         <div>{obj.message}</div>
         <small className="timestamp"><Moment calendar={calendarStrings}>{date}</Moment></small>
