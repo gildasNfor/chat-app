@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MessageIcon from '@material-ui/icons/Message';
 import CloseIcon from '@material-ui/icons/Close';
 import "./chat.css"
-
+import profilePic from '../../assets/profile.png'
 
 const customStyles = {
   content: {
@@ -45,8 +45,6 @@ const Chat = () => {
     "https://www.htmlcsscolor.com/preview/gallery/E0ECE4.png"
   );
   const [isSearchListOpen, setSearchListOpen] = useState(false)
-
-  const myProfilePicURL = "https://lh3.googleusercontent.com/proxy/5CygrHciKVJCh4IHjlVtZlkjf-B-yZfO9qnZc02njzTE2NPxkHNJnhinyeJN7yqmwRZQuJKwGNnlcj-Z8IXnsDQkgfzIXa6ZyiPdOy9NKpILACYkWeVvR3tm";
 
   useEffect(() => {
     const profiles = firebase.database().ref("users");
@@ -118,7 +116,7 @@ const Chat = () => {
       <div className="row">
         <div className="col-md-4" style={{ borderRight: "1px solid black" }}>
           <div className="row top-row d-flex justify-content-between align-items-center" style={{ backgroundColor: '#e0ece4' }}>
-            <Contact name="Bill" source={myProfilePicURL} />
+            <Contact name="Bill" source={profilePic} />
             <button className="btn btn-primary btn-sm mr-3" onClick={handleNewButtonClicked}>New <AddIcon /></button>
           </div>
           <div className="row search-row">
@@ -129,33 +127,32 @@ const Chat = () => {
             {" "}
             {/** threads */}
             <div className="thread-list">
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
-              <Thread source={myProfilePicURL} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
+              <Thread source={profilePic} />
             </div>
           </div>
         </div>
         <div className="col-md-8 second-col">
           <div className="row top-row d-flex pl-3">
-            <Contact name="Bill" source={myProfilePicURL} />
+            <Contact name="Bill" source={profilePic} />
           </div>
           <div className="chat-area">
             <ChatLayout />
@@ -189,37 +186,37 @@ const Chat = () => {
             <ul className="list-group">
               <li className="list-group-item">
                 <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={myProfilePicURL} />
+                  <Contact name="Bill" source={profilePic} />
                   <span><MessageIcon /></span>
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={myProfilePicURL} />
+                  <Contact name="Bill" source={profilePic} />
                   <span><MessageIcon /></span>
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={myProfilePicURL} />
+                  <Contact name="Bill" source={profilePic} />
                   <span><MessageIcon /></span>
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={myProfilePicURL} />
+                  <Contact name="Bill" source={profilePic} />
                   <span><MessageIcon /></span>
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={myProfilePicURL} />
+                  <Contact name="Bill" source={profilePic} />
                   <span><MessageIcon /></span>
                 </div>
               </li>
               <li className="list-group-item">
                 <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={myProfilePicURL} />
+                  <Contact name="Bill" source={profilePic} />
                   <span><MessageIcon /></span>
                 </div>
               </li>

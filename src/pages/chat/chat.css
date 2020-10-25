@@ -51,7 +51,7 @@
 .chat-area {
   height: calc(100vh - 115px);
   /* background-color: #838383; */
-  background: url("http://forums.crackberry.com/attachments/blackberry-10-wallpapers-f308/137432d1361639896t-z10-wallpaper-set-z10-music.jpg");
+  background: url("../../assets//background.jpg");
 }
 .li {
   border-bottom: solid;
