@@ -1,14 +1,15 @@
 // jshint esversion:6
 
 import React, { useState, useEffect } from "react";
-import firebase from "../util/firebase";
-import Contact from "../components/contact";
-import Thread from "../components/thread";
-import ChatLayout from "../components/message";
+import firebase from "../../util/firebase";
+import Contact from "../../components/contact/contact";
+import Thread from "../../components/thread/thread";
+import ChatLayout from "../../components/message/message";
 import Modal from 'react-modal';
 import AddIcon from '@material-ui/icons/Add';
 import MessageIcon from '@material-ui/icons/Message';
 import CloseIcon from '@material-ui/icons/Close';
+import "./chat.css"
 
 
 const customStyles = {
@@ -127,7 +128,11 @@ const Chat = () => {
           <div className="row">
             {" "}
             {/** threads */}
-            <div className="thread-list full-height">
+            <div className="thread-list">
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
+              <Thread source={myProfilePicURL} />
               <Thread source={myProfilePicURL} />
               <Thread source={myProfilePicURL} />
               <Thread source={myProfilePicURL} />
@@ -174,6 +179,8 @@ const Chat = () => {
         contentLabel="Example Modal"
       >
         <div>
+          Start a new chat
+          <hr />
           <div className="d-flex justify-content-between align-items-center mb-3">
             <input className="form-control" placeholder="search" />
             <button className="btn btn-danger btn-sm ml-3" onClick={handleSearchListClosed}><CloseIcon /></button>

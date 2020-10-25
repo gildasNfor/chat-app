@@ -1,10 +1,10 @@
 // jshint esversion:6
 
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as md5 from "md5";
-import firebase from "../util/firebase";
-import "../styles.css";
+import firebase from "../../util/firebase";
+import "./auth.css"
 
 const Login = () => {
   const [profile, setprofile] = useState({
@@ -54,10 +54,15 @@ const Login = () => {
   };
 
   return (
-    <>
-      <h1> Login </h1>
-      <div className="login">
-        <div>
+    <div className="d-flex justify-content-center align-items-center login-container">
+      <div>
+        <div className="d-flex justify-content-center">
+          <p>
+            <i class="fab fa-whatsapp fa-5x"> </i>
+          </p>
+        </div>
+        <div className="login-box">
+          <h3 className="text-center"> Login </h3>
           <form onSubmit={tryLogin}>
             <div class="form-group">
               <label> User Name </label>
@@ -83,13 +88,14 @@ const Login = () => {
                 required
               />
             </div>
-            <button type="submit" class="btn btn-success">
-              Login
-            </button>
+            <div className="d-flex justify-content-between align-items-center">
+              <button type="submit" class="btn btn-success">Login</button>
+              <Link to={'/signup'}>Signup</Link>
+            </div>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

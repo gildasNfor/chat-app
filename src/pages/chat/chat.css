@@ -1,0 +1,65 @@
+.btn-sml {
+  height: 4vh;
+}
+.new-message {
+  display: flex;
+  align-items: center;
+}
+
+.thread-item {
+  height: 75px;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #eeeeee;
+}
+
+.thread-item:hover {
+  background-color: #e0ece4;
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #e0ece4;
+  cursor: pointer;
+}
+
+.thread-list {
+  background-color: #eeeeee;
+  width: 100%;
+  overflow-y: scroll;
+  height: calc(100vh - 95px);
+}
+
+.second-col {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+.top-row {
+  height: 55px;
+}
+.search-row {
+  height: 40px;
+}
+
+.text-area {
+  height: 60px;
+  padding: 10px;
+  background-color: ivory;
+}
+.chat-area {
+  height: calc(100vh - 115px);
+  /* background-color: #838383; */
+  background: url("http://forums.crackberry.com/attachments/blackberry-10-wallpapers-f308/137432d1361639896t-z10-wallpaper-set-z10-music.jpg");
+}
+.li {
+  border-bottom: solid;
+  padding: 3px;
+  margin: 3px;
+}
+
+.search-list{
+  height: 240px;
+  overflow-y: scroll;
+}

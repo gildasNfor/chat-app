@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from 'react-moment';
+import "./message.css";
 
 const calendarStrings = {
   lastDay: '[Yesterday]',
@@ -35,32 +36,12 @@ const ChatLayout = () => {
   const chatBubbles = dummyData.map((obj, i = 0) => (
     <div className="d-flex" key={i}>
       <div key={i++} className={`p-1 bubble ${obj.direction}`}>
-        <div>{obj.message}</div>
+        <div>{obj.message}</div><br />
         <small className="timestamp"><Moment calendar={calendarStrings}>{date}</Moment></small>
       </div>
     </div>
   ));
   return <div className="chat-bubble-container">{chatBubbles}</div>;
 };
-
-// const Text = (props) => {
-//   const options = {
-//     month: "long",
-//     day: "numeric",
-//   };
-//   const date = new Date();
-//   const today = date.toLocaleDateString(undefined, options);
-//   const time = date.toLocaleTimeString("en-GB", {
-//     hour: "2-digit",
-//     minute: "2-digit",
-//   });
-
-//   return (
-//     <div className="note">
-//       <span className="text">{props.text}</span>
-//       <span className="date-time">{today + ", " + time}</span>
-//     </div>
-//   );
-// };
 
 export default ChatLayout;
