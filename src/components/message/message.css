@@ -21,11 +21,14 @@
 }
 
 .chat-bubble-container {
-  width: 98%;
   bottom: 0;
-  position: absolute;
   margin-bottom: 68px;
+  height: calc(100vh - 115px);
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
 }
+
 
 .left {
   justify-content: flex-start !important;

@@ -12,7 +12,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import "./chat.css"
 import profilePic from '../../assets/profile.png'
 import { connect } from 'react-redux';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { bindActionCreators } from 'redux';
+import { setCurrentThread, setAllThreads } from '../../redux/actions/threadActions'
 
 
 const customStyles = {
@@ -32,47 +34,32 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
+let currentThreadIndex = -1
+
 const Chat = (props) => {
-  const [users, setUsers] = useState([]);
-  const [photos, setPhotos] = useState([]);
-  const [search, setSearch] = useState("");
-  const [photosAvailable, setPhotosAvailable] = useState(false);
   const [message, setMessage] = useState("");
-  const [activeChat, setActiveChat] = useState("");
-  const [displayPhoto, setDisplayPhoto] = useState(
-    "https://www.htmlcsscolor.com/preview/gallery/E0ECE4.png"
-  );
   const [isSearchListOpen, setSearchListOpen] = useState(false)
-  const { currentUser } = props
-
-  useEffect(() => {
-    const profiles = firebase.database().ref("users");
-
-    profiles.on("value", (snapshot) => {
-      const userList = snapshot.val();
-      const accounts = [];
-      for (let id in userList) {
-        accounts.push(userList[id]);
+  const { currentUser, allUsers, allThreads, currentThread, setCurrentThread, setAllThreads } = props
+  const [otherUser, setOtherUser] = useState(null)
+  const newUsers = allUsers.filter(user => user.uid !== currentUser.uid)
+  useEffect(function () {
+    let threadsRef = firebase.database().ref('/threads')
+    threadsRef.on('value', function (snapshot) {
+      const val = snapshot.val()
+      let threads = []
+      if (val) {
+        let threadIds = Object.keys(val)
+        threads = threadIds.map(tId => val[tId])
       }
-      setUsers(accounts);
-    });
+      setAllThreads(threads)
+      scrollChatDivToBottom()
+    })
   }, []);
 
-
-  const openChat = (chatter, dp) => {
-    setActiveChat(chatter);
-    setDisplayPhoto(dp);
-  };
-
-  const handleChange = (event) => {
-    const text = event.target.value;
-    setMessage(text);
-  };
-
-  const handleClick = () => {
-    console.log(message);
-    setMessage("");
-  };
+  const scrollChatDivToBottom = () => {
+    var div = document.getElementById("chat-div");
+    div.scrollTop = div.scrollHeight;
+  }
 
   const handleNewButtonClicked = () => {
     setSearchListOpen(true)
@@ -80,27 +67,66 @@ const Chat = (props) => {
   const handleSearchListClosed = () => {
     setSearchListOpen(false);
   }
-
-  const handleSearch = (event) => {
-    const query = event.target.value;
-    setSearch(query);
-
-    const profiles = firebase.database().ref("users");
-
-    profiles.on("value", (snapshot) => {
-      const userList = snapshot.val();
-      const accounts = [];
-      for (let id in userList) {
-        accounts.push(userList[id]);
-      }
-      const updatedList = accounts.filter((account) =>
-        account.username.includes(query)
-      );
-      setUsers(updatedList);
+  const handleSignoutButtonClick = () => {
+    firebase.auth().signOut().then(() => {
+      props.history.push('/login');
+    }).catch(err => {
+      console.log(err)
     });
-  };
+  }
 
+  const handleThreadClicked = (thread, i) => {
+    setCurrentThread(thread)
+    currentThreadIndex = i
+    scrollChatDivToBottom()
+    const otherUser = thread.users.find(u => u.uid !== currentUser.uid)
+    setOtherUser(otherUser)
+  }
 
+  const onSetMessage = async () => {
+    let msg = {
+      message: message,
+      createdAt: new Date().getTime(),
+      sender: currentUser.uid,
+    }
+    let currentThreadRef = firebase.database().ref(`/threads/${currentThread.id}`)
+    let snapshot = await currentThreadRef.once('value');
+    let val = snapshot.val()
+    if (!val.messages) {
+      val.messages = []
+    }
+    val.messages.push(msg)
+    currentThreadRef.set(val)
+    setCurrentThread(val)
+    setMessage("")
+    scrollChatDivToBottom()
+  }
+
+  const createNewThread = (user) => {
+    let existingThread = allThreads.find(t => {
+      return t.users.find(u => u.uid === user.uid) && t.users.find(u => u.uid === currentUser.uid)
+    })
+    let thread = null;
+    if (existingThread) {
+      thread = existingThread
+    } else {
+      let threadsRef = firebase.database().ref('/threads')
+      let newThreadRef = threadsRef.push()
+      thread = {
+        users: [currentUser, user],
+        createdBy: currentUser.uid,
+        createdAt: new Date().getTime(),
+        messages: [],
+        id: newThreadRef.key
+      }
+      newThreadRef.set(thread)
+    }
+    setCurrentThread(thread)
+    setSearchListOpen(false);
+    scrollChatDivToBottom();
+    const otherUser = thread.users.find(u => u.uid !== currentUser.uid)
+    setOtherUser(otherUser)
+  }
 
   return (
     <div style={{ margin: "auto", border: "1px solid grey", backgroundColor: 'white' }} className="container">
@@ -118,43 +144,25 @@ const Chat = (props) => {
             {" "}
             {/** threads */}
             <div className="thread-list">
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
-              <Thread source={profilePic} />
+              {allThreads.map((thread, i) => <Thread onClick={() => handleThreadClicked(thread, i)} thread={thread} key={i} source={profilePic} />)}
             </div>
           </div>
         </div>
         <div className="col-md-8 second-col">
-          <div className="row top-row d-flex pl-3">
-            <Contact name={'Other person'} source={profilePic} />
+          <div className="row top-row d-flex pl-3 justify-content-between align-items-center">
+            {currentThread && <Contact name={otherUser ? otherUser.displayName : ''} source={profilePic} />}<span></span>
+            <button className="btn btn-danger btn-sm mr-3" onClick={handleSignoutButtonClick}>Signout <ExitToAppIcon /></button>
           </div>
           <div className="chat-area">
-            <ChatLayout />
+            <ChatLayout messages={currentThread ? allThreads[currentThreadIndex].messages : []} />
           </div>
           <div className="text-area">
             <div className="row">
               <div className="col-md-10">
-                <input className="form-control" />
+                <input disabled={!currentThread} value={message} onChange={(e) => setMessage(e.target.value)} className="form-control" />
               </div>
               <div className="col-md-2 send-button">
-                <button className="btn btn-success btn-sm">Send</button>
+                <button disabled={!currentThread} onClick={onSetMessage} className="btn btn-success btn-sm">Send</button>
               </div>
             </div>
           </div>
@@ -175,42 +183,13 @@ const Chat = (props) => {
           </div>
           <div className="search-list">
             <ul className="list-group">
-              <li className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={profilePic} />
-                  <span><MessageIcon /></span>
-                </div>
-              </li>
-              <li className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={profilePic} />
-                  <span><MessageIcon /></span>
-                </div>
-              </li>
-              <li className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={profilePic} />
-                  <span><MessageIcon /></span>
-                </div>
-              </li>
-              <li className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={profilePic} />
-                  <span><MessageIcon /></span>
-                </div>
-              </li>
-              <li className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={profilePic} />
-                  <span><MessageIcon /></span>
-                </div>
-              </li>
-              <li className="list-group-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <Contact name="Bill" source={profilePic} />
-                  <span><MessageIcon /></span>
-                </div>
-              </li>
+              {newUsers.map((user, i) =>
+                <li onClick={() => createNewThread(user)} key={i} className="list-group-item">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <Contact name={user.displayName} source={profilePic} />
+                    <span><MessageIcon /></span>
+                  </div>
+                </li>)}
             </ul>
           </div>
         </div>
@@ -220,15 +199,18 @@ const Chat = (props) => {
 };
 
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, thread }) => {
   return {
-    currentUser: auth.user
+    currentUser: auth.user,
+    allUsers: auth.allUsers,
+    allThreads: thread.allThreads,
+    currentThread: thread.currentThread,
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({}, dispatch);
-// };
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ setCurrentThread, setAllThreads }, dispatch);
+};
 
-export default connect(mapStateToProps, null)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);
 

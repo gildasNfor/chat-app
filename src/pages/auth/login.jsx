@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import * as md5 from "md5";
 import firebase from "../../util/firebase";
+import Swal from 'sweetalert2'
+
 import "./auth.css"
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false)
 
   const history = useHistory();
 
@@ -26,31 +28,24 @@ const Login = () => {
   };
 
   const tryLogin = (event) => {
-    const profiles = firebase.database().ref("users");
-    const checkProfile = {
-      password: md5(profile.password),
-      username: profile.username,
-    };
-
-    profiles.on("value", (snapshot) => {
-      const users = snapshot.val();
-      const list = [];
-
-      for (let id in users) {
-        list.push(JSON.stringify(users[id]));
-      }
-
-      if (list.indexOf(JSON.stringify(checkProfile)) === -1) {
-        history.push("/failure");
-      } else {
-        history.push("/success");
-      }
-    });
-    setprofile({
-      username: "",
-      password: "",
-    });
+    setLoading(true)
     event.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(`${profile.username}@chatapp.com`, profile.password).then(auth => {
+      history.push('/chat')
+      setprofile({
+        username: "",
+        password: "",
+      });
+    }).catch(err => {
+      console.log(err)
+      Swal.fire({
+        title: 'Error',
+        text: err.message,
+        icon: 'error'
+      })
+    }).finally(() => {
+      setLoading(false)
+    })
   };
 
   return (
@@ -89,7 +84,11 @@ const Login = () => {
               />
             </div>
             <div className="d-flex justify-content-between align-items-center">
-              <button type="submit" class="btn btn-success">Login</button>
+              {!loading ?
+                <button type="submit" class="btn btn-success">Login</button> :
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">signin in...</span>
+                </div>}
               <Link to={'/signup'}>Signup</Link>
             </div>
           </form>

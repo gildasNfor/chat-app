@@ -2,6 +2,8 @@ import React from "react";
 import Moment from 'react-moment';
 import "./thread.css"
 import '../contact/contact.css'
+import { connect } from 'react-redux';
+
 
 const calendarStrings = {
   lastDay: '[Yesterday]',
@@ -12,23 +14,38 @@ const calendarStrings = {
   sameElse: 'L'
 };
 
+
 const Thread = (props) => {
-  const date = new Date(2020, 9, 2)
+  const { thread, onClick, currentUser } = props
+
+  const lastMessage = thread.messages ? thread.messages[thread.messages.length - 1] : null;
+  const otherUser = thread.users.find(u => u.uid !== currentUser.uid)
+
   return (
     <>
-      <div className="d-flex flex-wrap align-items-center">
+      <div onClick={onClick} className="d-flex flex-wrap align-items-center thread-list-item">
         <div className="col-md-3">
           <img className="profile-pic" src={props.source} alt="display" />
         </div>
+
         <div className="col-md-7">
-          <div className="row name">Name</div>
-          <div className="row last-message cut-text">very long mmessage</div>
+          <div className="row name">{otherUser.displayName}</div>
+          {lastMessage && <div className="row last-message cut-text">{lastMessage.message}</div>}
         </div>
-        <div className="col-md-2 p-0 time"><small><Moment calendar={calendarStrings}>{date}</Moment></small></div>
+        {lastMessage && <div className="col-md-2 p-0 time"><small><Moment calendar={calendarStrings}>{new Date(lastMessage.createdAt)}</Moment></small></div>}
       </div>
       <hr className="m-0"></hr>
     </>
   );
 };
 
-export default Thread;
+const mapStateToProps = ({ auth, thread }) => {
+  return {
+    currentUser: auth.user,
+    allThreads: thread.allThreads,
+  }
+}
+
+export default connect(mapStateToProps, null)(Thread);
+
+

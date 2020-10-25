@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../../util/firebase"
-import * as md5 from "md5";
 import "./auth.css"
 import Swal from 'sweetalert2'
 
@@ -10,31 +9,52 @@ const Signup = () => {
   const [profile, setprofile] = useState({
     username: "",
     password: "",
-    repeatPassword: ""
+    repeatPassword: "",
+    displayName: ""
   });
-
+  const [loading, setLoading] = useState(false)
   const history = useHistory();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setprofile((profile) => {
       return { ...profile, [name]: value };
     });
   };
 
   const createProfile = async (event) => {
+    setLoading(true)
     event.preventDefault();
+
+    if (profile.password !== profile.repeatPassword) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Passwords dont match',
+        icon: 'error'
+      })
+      setLoading(false)
+      return
+    }
 
     let email = `${profile.username}@chatapp.com`
     try {
       let auth = await firebase.auth().createUserWithEmailAndPassword(email, profile.password)
-      console.log(auth)
+      console.log(auth.user.uid)
       firebase.auth().currentUser.updateProfile({
         displayName: profile.username
       })
-      setprofile({ username: "", password: "" });
 
+      // add the user to the list of users
+      firebase.database().ref(`/users/${auth.user.uid}`).set({
+        email: auth.user.email,
+        username: profile.username,
+        photoURL: auth.user.photoURL,
+        displayName: profile.username,
+        uid: auth.user.uid
+      });
+
+      setprofile({ username: "", password: "" });
+      history.push('/chat')
     } catch (err) {
       console.log(err)
       Swal.fire({
@@ -42,6 +62,8 @@ const Signup = () => {
         text: err.message,
         icon: 'error'
       })
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -94,7 +116,10 @@ const Signup = () => {
             </div>
 
             <div className="d-flex justify-content-between align-items-center">
-              <button type="submit" className="btn btn-success">Signup </button>
+              {!loading ? <button type="submit" className="btn btn-success">Signup </button> :
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">signin up...</span>
+                </div>}
               <Link to={'/login'}>Login</Link>
             </div>
           </form>
