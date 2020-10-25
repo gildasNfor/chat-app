@@ -11,6 +11,9 @@ import MessageIcon from '@material-ui/icons/Message';
 import CloseIcon from '@material-ui/icons/Close';
 import "./chat.css"
 import profilePic from '../../assets/profile.png'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 
 const customStyles = {
   content: {
@@ -29,7 +32,7 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-const Chat = () => {
+const Chat = (props) => {
   const [users, setUsers] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [search, setSearch] = useState("");
@@ -40,6 +43,7 @@ const Chat = () => {
     "https://www.htmlcsscolor.com/preview/gallery/E0ECE4.png"
   );
   const [isSearchListOpen, setSearchListOpen] = useState(false)
+  const { currentUser } = props
 
   useEffect(() => {
     const profiles = firebase.database().ref("users");
@@ -103,7 +107,7 @@ const Chat = () => {
       <div className="row">
         <div className="col-md-4" style={{ borderRight: "1px solid black" }}>
           <div className="row top-row d-flex justify-content-between align-items-center" style={{ backgroundColor: '#e0ece4' }}>
-            <Contact name="Bill" source={profilePic} />
+            <Contact name={currentUser ? currentUser.displayName : ''} source={profilePic} />
             <button className="btn btn-primary btn-sm mr-3" onClick={handleNewButtonClicked}>New <AddIcon /></button>
           </div>
           <div className="row search-row">
@@ -139,7 +143,7 @@ const Chat = () => {
         </div>
         <div className="col-md-8 second-col">
           <div className="row top-row d-flex pl-3">
-            <Contact name={'bill'} source={profilePic} />
+            <Contact name={'Other person'} source={profilePic} />
           </div>
           <div className="chat-area">
             <ChatLayout />
@@ -215,4 +219,16 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    currentUser: auth.user
+  }
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//   return bindActionCreators({}, dispatch);
+// };
+
+export default connect(mapStateToProps, null)(Chat);
+
