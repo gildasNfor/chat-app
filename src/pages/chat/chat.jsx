@@ -26,11 +26,6 @@ const customStyles = {
   }
 };
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
 
 Modal.setAppElement('#root')
 
@@ -57,16 +52,8 @@ const Chat = () => {
       }
       setUsers(accounts);
     });
-
-    fetch("https://picsum.photos/v2/list")
-      .then((response) => response.json())
-      .then((response) => {
-        setPhotos(response);
-        setPhotosAvailable(true);
-      });
   }, []);
 
-  console.log(photos);
 
   const openChat = (chatter, dp) => {
     setActiveChat(chatter);
@@ -152,7 +139,7 @@ const Chat = () => {
         </div>
         <div className="col-md-8 second-col">
           <div className="row top-row d-flex pl-3">
-            <Contact name="Bill" source={profilePic} />
+            <Contact name={'bill'} source={profilePic} />
           </div>
           <div className="chat-area">
             <ChatLayout />

@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import firebase from "../../util/firebase"
 import * as md5 from "md5";
 import "./auth.css"
+import Swal from 'sweetalert2'
 
 
 const Signup = () => {
@@ -22,37 +23,26 @@ const Signup = () => {
     });
   };
 
-  const createProfile = (event) => {
-    const userList = firebase.database().ref("users");
-    const newProfile = {
-      username: profile.username,
-      password: md5(profile.password),
-    };
-
-    userList.on("value", (snapshot) => {
-      const users = snapshot.val();
-      const currentUsers = [];
-
-      for (let id in users) {
-        currentUsers.push(users[id].username);
-      }
-
-      if (currentUsers.indexOf(newProfile.username) === -1) {
-        userList.push(newProfile);
-        console.log(`added`);
-        setprofile({ username: "", password: "" });
-        // eslint-disable-next-line no-unused-expressions
-        // <Redirect to="/success" />;
-        history.push("/success");
-      } else {
-        // eslint-disable-next-line no-unused-expressions
-        // <Redirect to="/failure" />;
-        history.push("/failure");
-      }
-    });
-
-    setprofile({ username: "", password: "" });
+  const createProfile = async (event) => {
     event.preventDefault();
+
+    let email = `${profile.username}@chatapp.com`
+    try {
+      let auth = await firebase.auth().createUserWithEmailAndPassword(email, profile.password)
+      console.log(auth)
+      firebase.auth().currentUser.updateProfile({
+        displayName: profile.username
+      })
+      setprofile({ username: "", password: "" });
+
+    } catch (err) {
+      console.log(err)
+      Swal.fire({
+        title: 'Error',
+        text: err.message,
+        icon: 'error'
+      })
+    }
   };
 
   return (
